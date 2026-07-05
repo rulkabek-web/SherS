@@ -1,6 +1,8 @@
+from src.main.api.classes.api_manager import ApiManager
+from src.main.api.models.base_model import BaseModel
 
 class TestCreditRepay:
-    def test_credit_repay(self, api_manager, credit_repay_requests):
+    def test_credit_repay(self, api_manager: ApiManager, credit_repay_requests: dict[str, BaseModel]):
 
         credit_history_before_repay_response = api_manager.user_steps.credit_history_request(credit_repay_requests)
 
@@ -16,7 +18,7 @@ class TestCreditRepay:
 
     def test_invalid_credit_repay(
             self,
-            api_manager,
+            api_manager: ApiManager,
             invalid_credit_repay_requests):
 
         api_manager.user_steps.invalid_credit_repay_request(

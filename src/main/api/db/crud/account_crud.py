@@ -7,6 +7,10 @@ class AccountCrudDb:
         return db.query(Account).filter_by(id=account_id).first()
 
     @staticmethod
+    def get_all_accounts_by_user_id(db: Session, user_id: int) -> Account | None:
+        return db.query(Account).filter_by(user_id=user_id).all()
+
+    @staticmethod
     def delete_account(db: Session, account_id: int) -> None:
         account = db.query(Account).filter_by(id=account_id).first()
         if account:

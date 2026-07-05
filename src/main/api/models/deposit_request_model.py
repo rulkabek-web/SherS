@@ -4,4 +4,4 @@ from src.main.api.generators.creation_rule import CreationRule
 
 class DepositRequest(BaseModel):
     accountId: int
-    amount: Annotated[float,CreationRule(regex=r'^(?:[1-8]\d{3}(?:\.\d{1,3})?|9000(?:\.0{1,3})?)$')]
+    amount: Annotated[float, CreationRule(min_float=1000, max_float=9000)]

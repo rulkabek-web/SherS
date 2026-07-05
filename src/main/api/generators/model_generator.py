@@ -2,13 +2,14 @@ import uuid
 import random
 from typing import Any, get_type_hints, get_origin, Annotated, get_args
 import rstr
+from src.main.api.models.base_model import BaseModel
 
 from src.main.api.generators.creation_rule import CreationRule
 
 
 class RandomModelGenerator:
     @staticmethod
-    def generate(cls: type, **overrides) -> Any:
+    def generate(cls: type, **overrides) -> BaseModel:
         type_hints = get_type_hints(cls, include_extras=True)
         init_data = {}
 
