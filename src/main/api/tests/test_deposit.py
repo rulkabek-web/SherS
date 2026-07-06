@@ -1,9 +1,10 @@
 from src.main.api.classes.api_manager import ApiManager
 from src.main.api.models.base_model import BaseModel
 from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
-from src.main.api.db.crud.account_crud import AccountCrudDb as Account, AccountCrudDb
-from src.main.api.db.crud.user_crud import UserCrudDb as User
+from src.main.api.db.crud.account_crud import AccountCrudDb as Account
+
 from sqlalchemy.orm import Session
+
 
 class TestDeposit:
 

@@ -4,7 +4,7 @@ from src.main.api.db.crud.user_crud import UserCrudDb as User
 from src.main.api.db.crud.account_crud import AccountCrudDb as Account
 from src.main.api.db.crud.transaction_crud import TransactionCrudDb as Transaction
 from src.main.api.models.base_model import BaseModel
-from typing import Annotated, Optional, Any, Callable
+from typing import Annotated, Any, Callable
 from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
 from src.main.api.generators.creation_rule import CreationRule
 

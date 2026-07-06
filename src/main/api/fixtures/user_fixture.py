@@ -1,9 +1,7 @@
 import pytest
 from src.main.api.generators.creation_rule import CreationRule
-from typing import Annotated, Optional, Any, Callable
+from typing import Annotated, Any, Callable
 from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
-from src.main.api.fixtures.fixtures_models.fixtures_models import RequestsData
-
 from src.main.api.models.base_model import BaseModel
 from src.main.api.models.credit_repay_request_model import CreditRepayRequest
 from src.main.api.models.credit_request_model import CreditRequest
@@ -92,7 +90,8 @@ def transfer_requests_factory(api_manager: ApiManager) -> Callable[..., dict[str
     def create_transfer_requests(
             from_account: dict[str, BaseModel],
             to_account: dict[str, BaseModel],
-            amount: float | None = None
+            amount: float | None = None,
+            make_deposit: bool = True
     )-> dict[str, Any]:
 
         account_id = from_account
@@ -100,9 +99,6 @@ def transfer_requests_factory(api_manager: ApiManager) -> Callable[..., dict[str
 
         create_user_request = account_id.get("create_user_request")
         create_another_user_request = another_account_id.get("create_user_request")
-
-        deposit_requests = {}
-        deposit_requests["create_user_request"] = create_user_request
 
         if amount is not None:
             transfer_request = RandomModelGenerator.generate(
@@ -118,15 +114,18 @@ def transfer_requests_factory(api_manager: ApiManager) -> Callable[..., dict[str
                 toAccountId=another_account_id.get("id")
             )
 
-        deposit_request_before_transfer = RandomModelGenerator.generate(
-            DepositRequest,
-            accountId=account_id.get("id"),
-            amount=transfer_request.amount
+        if make_deposit:
+            deposit_requests = {}
+            deposit_requests["create_user_request"] = create_user_request
 
-        )
-        deposit_requests["deposit_request"] = deposit_request_before_transfer
+            deposit_request_before_transfer = RandomModelGenerator.generate(
+                DepositRequest,
+                accountId=account_id.get("id"),
+                amount=transfer_request.amount
+            )
+            deposit_requests["deposit_request"] = deposit_request_before_transfer
 
-        api_manager.user_steps.deposit(deposit_requests)
+            api_manager.user_steps.deposit(deposit_requests)
 
         return {
             "create_user_request": create_user_request,
@@ -222,7 +221,7 @@ def credit_repay_requests(api_manager: ApiManager, credit):
 
     create_user_request = credit.get("create_user_request")
 
-    requests = {"create_user_request": create_user_request, "credit_repay_request": credit_repay_request}
+    requests = {"create_user_request": create_user_request, "credit_repay_request": credit_repay_request, "credit_request_response": credit_request_response}
 
     return requests
 
@@ -239,6 +238,6 @@ def invalid_credit_repay_requests(api_manager: ApiManager, credit):
 
     create_user_request = credit.get("create_user_request")
 
-    requests = {"create_user_request": create_user_request, "credit_repay_request": credit_repay_request}
+    requests = {"create_user_request": create_user_request, "credit_repay_request": credit_repay_request, "credit_request_response": credit_request_response}
 
     return requests
