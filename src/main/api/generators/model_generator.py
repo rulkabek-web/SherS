@@ -15,7 +15,6 @@ class RandomModelGenerator:
 
         for field_name, annotated_type in type_hints.items():
 
-            # Если поле передано вручную
             if field_name in overrides:
                 override_value = overrides[field_name]
 
