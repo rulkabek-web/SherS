@@ -19,8 +19,6 @@ class RandomModelGenerator:
             if field_name in overrides:
                 override_value = overrides[field_name]
 
-                # Новый кейс:
-                # amount=Annotated[float, CreationRule(min_float=500, max_float=10000)]
                 if get_origin(override_value) is Annotated:
                     actual_type, rule = RandomModelGenerator._extract_rule(override_value)
 
@@ -32,14 +30,12 @@ class RandomModelGenerator:
                     else:
                         init_data[field_name] = RandomModelGenerator.generate_value(actual_type)
 
-                # Старый кейс:
-                # accountId=123
                 else:
                     init_data[field_name] = override_value
 
                 continue
 
-            # Правила, указанные в самой модели
+
             actual_type, rule = RandomModelGenerator._extract_rule(annotated_type)
 
             if rule is not None:
