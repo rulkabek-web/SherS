@@ -7,8 +7,10 @@ class Config:
 
     def __new__(cls):
         if cls._instance is None:
+            #вызываем __new__ родительского класса (object)
             cls._instance = super(Config, cls).__new__(cls)
 
+            #parents[4] позволяет подниматься по родительским папкам 
             config_path = Path(__file__).parents[4] / 'resources' / 'urls.properties'
 
             if not config_path.exists():

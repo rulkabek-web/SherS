@@ -19,8 +19,6 @@ class UserSteps(BaseSteps):
             endpoint=Endpoint.CREATE_ACCOUNT
         ).post()
 
-        # self.created_object.append(create_account_response)
-
         return create_account_response
 
     def deposit(self, requests):
