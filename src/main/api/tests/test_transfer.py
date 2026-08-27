@@ -7,6 +7,8 @@ from src.main.api.models.base_model import BaseModel
 from typing import Annotated, Any, Callable
 from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
 from src.main.api.generators.creation_rule import CreationRule
+import pytest
+pytestmark = pytest.mark.api
 
 class TestTransfer:
 

@@ -1,0 +1,41 @@
+services:
+
+  backend:
+    image: clausmerderet/bank_api:latest
+
+    ports:
+      - "4111:4111"
+      - "5433:5432"
+
+    networks:
+      - bank-network
+
+    healthcheck:
+      test: [ "CMD-SHELL", "php -r '$$s=@fsockopen(\"127.0.0.1\",4111); exit($$s ? 0 : 1);'" ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+
+  tests:
+    build: .
+
+    depends_on:
+      backend:
+        condition: service_healthy
+
+    environment:
+      BACKEND_URL: http://backend:4111/api
+      DATABASE_URL: postgresql+psycopg2://symfony:password@backend:5432/symfony_db
+
+    volumes:
+      - ./reports/allure:/app/reports/allure
+
+    networks:
+      - bank-network
+
+
+networks:
+  bank-network:
+    driver: bridge

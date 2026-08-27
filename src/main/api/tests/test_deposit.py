@@ -4,7 +4,8 @@ from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
 from src.main.api.db.crud.account_crud import AccountCrudDb as Account
 
 from sqlalchemy.orm import Session
-
+import pytest
+pytestmark = pytest.mark.api
 
 class TestDeposit:
 

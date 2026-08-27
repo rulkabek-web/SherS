@@ -1,6 +1,9 @@
 from src.main.ui.steps.catalog_steps import CatalogSteps
 from src.main.ui.steps.basket_steps import BasketSteps
 from src.main.ui.steps.checkot_steps import  CheckoutSteps
+import pytest
+
+pytestmark = pytest.mark.ui
 
 def test_add_item_and_check_in_cart(page):
     basket = BasketSteps(page)

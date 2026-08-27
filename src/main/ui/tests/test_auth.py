@@ -1,6 +1,9 @@
 from src.main.ui.steps.catalog_steps import CatalogSteps
 from src.main.ui.steps.login_steps import LoginSteps
 from src.main.ui.utils.constants import Urls
+import pytest
+
+pytestmark = pytest.mark.ui
 
 def test_auth(page):
     steps = LoginSteps(page)

@@ -1,4 +1,7 @@
 from src.main.ui.steps.catalog_steps import CatalogSteps
+import pytest
+
+pytestmark = pytest.mark.ui
 
 def test_count_catalog(page):
     steps = CatalogSteps(page)

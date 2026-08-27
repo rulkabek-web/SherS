@@ -8,7 +8,8 @@ from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
 
 from sqlalchemy.orm import Session
 from src.main.api.models.base_model import BaseModel
-
+import pytest
+pytestmark = pytest.mark.api
 
 class TestCreditRequest:
 

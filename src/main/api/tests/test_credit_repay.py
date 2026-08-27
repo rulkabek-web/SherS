@@ -7,7 +7,8 @@ from src.main.api.db.crud.account_crud import AccountCrudDb as Account
 from src.main.api.fixtures.fixtures_models.fixtures_models import AccountData
 from sqlalchemy.orm import Session
 from src.main.api.helpers.find_credit import find_credit
-
+import pytest
+pytestmark = pytest.mark.api
 
 class TestCreditRepay:
     def test_credit_repay(
