@@ -1,0 +1,3 @@
+backend:
+  image: clausmerderet/bank_api:latest
+  replicas: 2
