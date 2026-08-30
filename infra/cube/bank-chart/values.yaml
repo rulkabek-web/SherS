@@ -1,0 +1,9 @@
+backend:
+  image: clausmerderet/bank_api:latest
+  replicas: 1
+  port: 4111
+
+tests:
+  image: bankapisenior1-tests:latest
+  backendUrl: http://backend:4111/api
+  databaseUrl: postgresql+psycopg2://symfony:password@backend:5432/symfony_db

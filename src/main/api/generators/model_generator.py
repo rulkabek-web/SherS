@@ -2,24 +2,22 @@ import uuid
 import random
 from typing import Any, get_type_hints, get_origin, Annotated, get_args
 import rstr
+from src.main.api.models.base_model import BaseModel
 
 from src.main.api.generators.creation_rule import CreationRule
 
 
 class RandomModelGenerator:
     @staticmethod
-    def generate(cls: type, **overrides) -> Any:
+    def generate(cls: type, **overrides) -> BaseModel:
         type_hints = get_type_hints(cls, include_extras=True)
         init_data = {}
 
         for field_name, annotated_type in type_hints.items():
 
-            # Если поле передано вручную
             if field_name in overrides:
                 override_value = overrides[field_name]
 
-                # Новый кейс:
-                # amount=Annotated[float, CreationRule(min_float=500, max_float=10000)]
                 if get_origin(override_value) is Annotated:
                     actual_type, rule = RandomModelGenerator._extract_rule(override_value)
 
@@ -31,14 +29,12 @@ class RandomModelGenerator:
                     else:
                         init_data[field_name] = RandomModelGenerator.generate_value(actual_type)
 
-                # Старый кейс:
-                # accountId=123
                 else:
                     init_data[field_name] = override_value
 
                 continue
 
-            # Правила, указанные в самой модели
+
             actual_type, rule = RandomModelGenerator._extract_rule(annotated_type)
 
             if rule is not None:

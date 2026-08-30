@@ -1,15 +1,11 @@
 import pytest
-
-
-
-
 from src.main.api.db.engine import SessionLocal, engine
 
 @pytest.fixture(scope="function")
 def db_session():
     connection = engine.connect()
-    transaction = connection.begin()
-    session = SessionLocal(bind=connection)
+    transaction = connection.begin() #начинается транзакция
+    session = SessionLocal(bind=connection) #Создаётся ORM-сессия
     try:
         yield session
     finally:

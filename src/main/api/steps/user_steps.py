@@ -19,14 +19,12 @@ class UserSteps(BaseSteps):
             endpoint=Endpoint.CREATE_ACCOUNT
         ).post()
 
-        # self.created_object.append(create_account_response)
-
         return create_account_response
 
     def deposit(self, requests):
 
-        create_user_request = requests.get("create_user_request")
-        deposit_request = requests.get("deposit_request")
+        create_user_request = requests["create_user_request"]
+        deposit_request = requests["deposit_request"]
 
         deposit_response = ValidateCrudRequester(
             request_spec=RequestSpecs.auth_headers(
@@ -49,7 +47,7 @@ class UserSteps(BaseSteps):
                 username=create_user_request.username,
                 password=create_user_request.password
             ),
-            response_spec=ResponseSpecs.request_not_found(),
+            response_spec=ResponseSpecs.request_bad(),
             endpoint=Endpoint.DEPOSIT
         ).post(deposit_request)
 

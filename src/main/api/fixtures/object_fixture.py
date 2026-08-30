@@ -2,7 +2,7 @@ import pytest
 import logging
 from src.main.api.classes.api_manager import ApiManager
 from src.main.api.models.create_user_response_model import CreateUserResponse
-from typing import List, Any, Dict
+from typing import List, Any
 
 
 @pytest.fixture

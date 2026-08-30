@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.backend.image | quote }}
+          ports:
+            - containerPort: {{ .Values.backend.port }}
+              name: http
+
+---
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: backend
+  labels:
+    app: backend
+
+spec:
+  selector:
+    app: backend
+
+  ports:
+    - name: http
+      protocol: TCP
+      port: {{ .Values.backend.port }}
+      targetPort: {{ .Values.backend.port }}
+
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+
+  type: ClusterIP

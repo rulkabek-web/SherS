@@ -5,4 +5,4 @@ from src.main.api.generators.creation_rule import CreationRule
 class TransferRequest(BaseModel):
     fromAccountId: int
     toAccountId: int
-    amount: Annotated[float,CreationRule(regex = r'^(?:[5-9]\d{2}|[1-9]\d{3}|10000)$')]
+    amount: Annotated[float, CreationRule(min_float=500, max_float=10000)]

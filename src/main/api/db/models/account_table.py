@@ -9,5 +9,5 @@ class Account(Base):
     number = Column(String, unique=True, nullable=False)
     balance = Column(Float, nullable=False)
 
-def __repr__(self):
-    return f"<Account(id={self.id}, user_id={self.user_id}, balance={self.balance}, number={self.number})>"
+    def __repr__(self):
+        return f"<Account(id={self.id}, user_id={self.user_id}, balance={self.balance}, number={self.number})>"
