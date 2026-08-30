@@ -20,7 +20,8 @@ spec:
         - name: backend
           image: {{ .Values.backend.image | quote }}
           ports:
-            - containerPort: 4111
+            - containerPort: {{ .Values.backend.port }}
+              name: http
 
 ---
 
@@ -39,7 +40,11 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 4111
-      targetPort: 4111
+      port: {{ .Values.backend.port }}
+      targetPort: {{ .Values.backend.port }}
 
-  type: NodePort
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+
+  type: ClusterIP

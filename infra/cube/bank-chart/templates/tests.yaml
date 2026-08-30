@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: tests
+
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+
+      initContainers:
+        - name: wait-for-backend
+          image: busybox:1.36
+
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z backend {{ .Values.backend.port }}; do
+                echo "Waiting for backend..."
+                sleep 2
+              done
+
+              until nc -z backend 5432; do
+                echo "Waiting for database..."
+                sleep 2
+              done
+
+      containers:
+        - name: tests
+          image: {{ .Values.tests.image | quote }}
+
+          env:
+            - name: BACKEND_URL
+              value: {{ .Values.tests.backendUrl | quote }}
+
+            - name: DATABASE_URL
+              value: {{ .Values.tests.databaseUrl | quote }}
+
+          command:
+            - pytest
+            - -s
+            - -v
+
+  backoffLimit: 0
